@@ -1,0 +1,16 @@
+language:
+  python
+python:
+  - "3.6"
+  - "3.6-dev" # 3.6 development branch
+  - "3.7-dev" # 3.7 development branch
+  - "nightly" # currently points to 3.7-dev
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+# command to run tests
+script:
+  coverage run --source=python_glasgow -m unittest
+after_success:
+  coveralls
