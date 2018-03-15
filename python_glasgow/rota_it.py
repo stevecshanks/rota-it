@@ -1,71 +1,72 @@
 import pprint
+from datetime import date
+from python_glasgow.person import Person
+
+
+GORDON = Person('Gordon',
+                ["Cleaning", "Driving", "Shopping"],
+                [date(2017, 10, 26), date(2017, 10, 29)])
+ERFAN = Person('Erfan',
+               ["Cleaning", "Cooking", "Driving", "Shopping"],
+               [date(2017, 10, 28)])
+ROGER = Person('Roger',
+               ["Cleaning", "Driving", "Shopping"],
+               [date(2017, 10, 26)])
+YURI = Person('Yuri',
+              ["Cooking", "Cleaning", "Shopping"],
+              [date(2017, 10, 27), date(2017, 10, 29)])
+
+PEOPLE = [GORDON, ERFAN, ROGER, YURI]
 
 
 tasks = {
-    "25/10/2017": {
+    date(2017, 10, 25): {
         "Driving": None,
         "Shopping": None
     },
-    "26/10/2017": {
+    date(2017, 10, 26): {
         "Cleaning": None,
         "Cooking": None,
         "Shopping": None
     },
-    "27/10/2017": {
+    date(2017, 10, 27): {
         "Cleaning": None,
         "Cooking": None
     },
-    "28/10/2017": {
+    date(2017, 10, 28): {
         "Cleaning": None,
         "Cooking": None,
         "Shopping": None
     },
-    "29/10/2017": {
+    date(2017, 10, 29): {
         "Cleaning": None,
         "Cooking": None
     },
-    "30/10/2017": {
-        "Driving": ["Roger"]
+    date(2017, 10, 30): {
+        "Driving": [ROGER.name]
     },
-    "31/10/2017": {
-        "Driving": ["Roger"]
+    date(2017, 10, 31): {
+        "Driving": [ROGER.name]
     }
 }
 
-skills = {
-    "Gordon": ["Cleaning", "Driving", "Shopping"],
-    "Erfan": ["Cleaning", "Cooking", "Driving", "Shopping"],
-    "Roger": ["Cleaning", "Driving", "Shopping"],
-    "Yuri": ["Cooking", "Cleaning", "Shopping"]
-}
-
-vacations = {
-    "25/10/2017": [],
-    "26/10/2017": ["Gordon", "Roger"],
-    "27/10/2017": ["Yuri"],
-    "28/10/2017": ["Erfan"],
-    "29/10/2017": ["Gordon", "Yuri"],
-    "30/10/2017": [],
-    "31/10/2017": []
-}
-
 workload = {
-    "Gordon": 0,
-    "Erfan": 0,
-    "Roger": 0,
-    "Yuri": 0
+    GORDON.name: 0,
+    ERFAN.name: 0,
+    ROGER.name: 0,
+    YURI.name: 0
 }
 
 max_length = 0
 for (date, todos) in tasks.items():
     for todo in todos.keys():
-        skilled_people = [person for person, abilities
-                          in skills.items()
-                          if todo in abilities
-                          and person not in vacations[date]]
-        todos[todo] = skilled_people
-        if (len(skilled_people) > max_length):
-            max_length = len(skilled_people)
+        eligible_people = [person.name for person
+                           in PEOPLE
+                           if person.has_skill(todo)
+                           and person.is_available_on(date)]
+        todos[todo] = eligible_people
+        if (len(eligible_people) > max_length):
+            max_length = len(eligible_people)
 
 for i in range(1, max_length + 1):
     for (date, todos) in tasks.items():
