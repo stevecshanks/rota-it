@@ -73,24 +73,35 @@ workload = {
     YURI.name: 0
 }
 
-max_length = 0
-for (date, todos) in tasks.items():
-    for todo in todos.keys():
+
+def assign_tasks(tasks, people):
+    pass
+
+
+def get_eligible_people(task, people):
+    return [person for person in people
+            if person.has_skill(task.skill)
+            and person.is_available_on(task.date)]
+
+
+if __name__ == '__main__':
+    max_length = 0
+    for task in TASKS:
         eligible_people = [person.name for person
                            in PEOPLE
-                           if person.has_skill(todo)
-                           and person.is_available_on(date)]
+                           if person.has_skill(task.skill)
+                           and person.is_available_on(task.date)]
         todos[todo] = eligible_people
         if (len(eligible_people) > max_length):
             max_length = len(eligible_people)
 
-for i in range(1, max_length + 1):
-    for (date, todos) in tasks.items():
-        for (todo, assignments) in todos.items():
-            if not isinstance(assignments, list) or len(assignments) != i: continue
-            (_, assignee) = sorted([(numTasks, person) for person, numTasks in workload.items() if person in assignments])[0]
-            workload[assignee] += 1
-            todos[todo] = assignee
+    for i in range(1, max_length + 1):
+        for (date, todos) in tasks.items():
+            for (todo, assignments) in todos.items():
+                if not isinstance(assignments, list) or len(assignments) != i: continue
+                (_, assignee) = sorted([(numTasks, person) for person, numTasks in workload.items() if person in assignments])[0]
+                workload[assignee] += 1
+                todos[todo] = assignee
 
-pprint.pprint(tasks)
-pprint.pprint(workload)
+    pprint.pprint(tasks)
+    pprint.pprint(workload)
