@@ -84,6 +84,17 @@ def get_eligible_people(task, people):
             and person.is_available_on(task.date)]
 
 
+def get_least_busy_person(tasks, people):
+    if len(people) == 0:
+        return None
+    return sorted(people,
+                  key=lambda person: len(get_assigned_tasks(tasks, person)))[0]
+
+
+def get_assigned_tasks(tasks, person):
+    return [task for task in tasks if task.assignee == person]
+
+
 if __name__ == '__main__':
     max_length = 0
     for task in TASKS:

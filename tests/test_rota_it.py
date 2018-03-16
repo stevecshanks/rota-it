@@ -20,3 +20,27 @@ class TestRotaIt(unittest.TestCase):
         task = Task('A skill', date(2018, 1, 1))
         person = Person('A Name', ['A skill'], [])
         self.assertEqual(rota_it.get_eligible_people(task, [person]), [person])
+
+        # TODO vacation
+
+    def test_get_assigned_tasks_returns_empty_list_if_no_assigned_tasks(self):
+        task = Task('A skill', date(2018, 1, 1))
+        person = Person('A Name', ['A skill'], [])
+        self.assertEqual(rota_it.get_assigned_tasks([task], person), [])
+
+    def test_get_assigned_tasks_returns_assigned_tasks(self):
+        person = Person('A Name', ['A skill'], [])
+        task = Task('A skill', date(2018, 1, 1), person)
+        self.assertEqual(rota_it.get_assigned_tasks([task], person), [task])
+
+    def test_get_least_busy_person_returns_none_if_no_people(self):
+        task = Task('A skill', date(2018, 1, 1))
+        self.assertIsNone(rota_it.get_least_busy_person([task], []))
+
+    def test_get_least_busy_person_returns_person_with_fewest_tasks(self):
+        lazy_person = Person('Lazy', ['A skill'], [])
+        busy_person = Person('Busy', ['A skill'], [])
+        task = Task('A skill', date(2018, 1, 1), busy_person)
+        self.assertEqual(
+            rota_it.get_least_busy_person([task], [busy_person, lazy_person]),
+            lazy_person)
