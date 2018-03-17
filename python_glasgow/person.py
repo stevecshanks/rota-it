@@ -9,4 +9,4 @@ class Person:
         return skill in self.skills
 
     def is_available_on(self, date):
-        return True
+        return date not in self.vacations

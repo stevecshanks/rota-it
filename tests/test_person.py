@@ -13,10 +13,10 @@ class TestPerson(unittest.TestCase):
         person = Person('Gordon', ['Cooking', 'Driving'], [])
         self.assertFalse(person.has_skill('Cleaning'))
 
-    def test_is_available_returns_true_if_person_not_on_vacation(self):
+    def test_is_available_on_returns_true_if_person_not_on_vacation(self):
         person = Person('Yuri', [], [])
         self.assertTrue(person.is_available_on(date(2018, 1, 1)))
 
-    def test_is_available_returns_false_if_person_on_vacation(self):
+    def test_is_available_on_returns_false_if_person_on_vacation(self):
         person = Person('Yuri', [], [date(2018, 1, 1)])
-        self.assertTrue(person.is_available_on(date(2018, 1, 1)))
+        self.assertFalse(person.is_available_on(date(2018, 1, 1)))
