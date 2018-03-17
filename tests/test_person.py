@@ -1,6 +1,6 @@
 import unittest
 from datetime import date
-from python_glasgow.person import Person
+from rotait.person import Person
 
 
 class TestPerson(unittest.TestCase):

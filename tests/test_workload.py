@@ -1,8 +1,8 @@
 import unittest
 from datetime import date
-from python_glasgow.person import Person
-from python_glasgow.task import Task
-from python_glasgow.workload import Workload
+from rotait.person import Person
+from rotait.task import Task
+from rotait.workload import Workload
 
 
 class TestWorkload(unittest.TestCase):

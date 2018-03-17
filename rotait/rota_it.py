@@ -1,7 +1,7 @@
 from datetime import date
-from python_glasgow.optimiser import Optimiser
-from python_glasgow.person import Person
-from python_glasgow.task import Task
+from rotait.optimiser import Optimiser
+from rotait.person import Person
+from rotait.task import Task
 
 
 GORDON = Person('Gordon',

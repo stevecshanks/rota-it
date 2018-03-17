@@ -11,6 +11,6 @@ install:
   - pip install coveralls
 # command to run tests
 script:
-  coverage run --source=python_glasgow -m unittest
+  coverage run --source=rotait -m unittest
 after_success:
   coveralls

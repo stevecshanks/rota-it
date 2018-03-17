@@ -1,6 +1,6 @@
 import unittest
 from datetime import date
-from python_glasgow.task import Task
+from rotait.task import Task
 
 
 class TestTask(unittest.TestCase):

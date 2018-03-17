@@ -1,4 +1,4 @@
-from python_glasgow.workload import Workload
+from rotait.workload import Workload
 
 
 class Optimiser:
