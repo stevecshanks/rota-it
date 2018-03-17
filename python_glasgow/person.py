@@ -10,3 +10,6 @@ class Person:
 
     def is_available_on(self, date):
         return date not in self.vacations
+
+    def __repr__(self):
+        return f'Person({self.name}, {self.skills}, {self.vacations})'
