@@ -21,6 +21,8 @@ class Optimiser:
                       key=lambda task: len([p for p in self._get_eligible_people(task)]))
 
     def _get_eligible_people(self, task):
+        if task.assignee:
+            return [task.assignee]
         return [person for person in self.people
                 if person.has_skill(task.skill)
                 and person.is_available_on(task.date)]
