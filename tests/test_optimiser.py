@@ -36,7 +36,7 @@ class TestOptimiser(unittest.TestCase):
 
         self.assertIsNone(task.assignee)
 
-    def tests_tasks_are_distributed_fairly(self):
+    def test_tasks_are_distributed_fairly(self):
         task1 = Task(date(2018, 1, 1), 'A skill')
         task2 = Task(date(2018, 1, 1), 'A skill')
 
@@ -49,3 +49,21 @@ class TestOptimiser(unittest.TestCase):
         self.assertIsNotNone(task1.assignee)
         self.assertIsNotNone(task2.assignee)
         self.assertNotEqual(task1.assignee, task2.assignee)
+
+    def test_hard_to_allocate_tasks_are_distributed_first(self):
+        cleaning1 = Task(date(2018, 1, 1), 'Cleaning')
+        cleaning2 = Task(date(2018, 1, 1), 'Cleaning')
+        driving1 = Task(date(2018, 1, 1), 'Driving')
+        driving2 = Task(date(2018, 1, 1), 'Driving')
+
+        cleaner = Person('Cleaner', ['Cleaning'], [])
+        cleaner_and_driver = Person('Cleaner and Driver', ['Cleaning', 'Driving'], [])
+
+        optimiser = Optimiser([cleaning1, cleaning2, driving1, driving2],
+                              [cleaner, cleaner_and_driver])
+        optimiser.optimise()
+
+        self.assertEqual(cleaning1.assignee, cleaner)
+        self.assertEqual(cleaning2.assignee, cleaner)
+        self.assertEqual(driving1.assignee, cleaner_and_driver)
+        self.assertEqual(driving2.assignee, cleaner_and_driver)

@@ -9,11 +9,18 @@ class Optimiser:
         self.workload = Workload()
 
     def optimise(self):
-        for task in self.tasks:
-            eligible_people = [person for person in self.people
-                               if person.has_skill(task.skill)
-                               and person.is_available_on(task.date)]
+        for task in self._get_tasks_by_difficulty():
+            eligible_people = self._get_eligible_people(task)
             best_person = self.workload.get_least_busy_person(eligible_people)
             if best_person:
                 self.workload.assign(task, best_person)
                 continue
+
+    def _get_tasks_by_difficulty(self):
+        return sorted(self.tasks,
+                      key=lambda task: len([p for p in self._get_eligible_people(task)]))
+
+    def _get_eligible_people(self, task):
+        return [person for person in self.people
+                if person.has_skill(task.skill)
+                and person.is_available_on(task.date)]
