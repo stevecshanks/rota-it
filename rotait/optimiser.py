@@ -14,7 +14,6 @@ class Optimiser:
             best_person = self.workload.get_least_busy_person(eligible_people)
             if best_person:
                 self.workload.assign(task, best_person)
-                continue
 
     def _get_tasks_by_difficulty(self):
         return sorted(self.tasks,
