@@ -28,3 +28,17 @@ class TestWorkload(unittest.TestCase):
         workload.assign(task, person)
 
         self.assertEqual(workload.assigned_to(person), 1)
+
+    def test_get_least_busy_person_returns_none_if_no_people(self):
+        workload = Workload()
+        self.assertIsNone(workload.get_least_busy_person([]))
+
+    def test_get_least_busy_person_returns_person_with_fewest_tasks(self):
+        lazy_person = Person('Lazy', ['A skill'], [])
+        busy_person = Person('Busy', ['A skill'], [])
+        task = Task(date(2018, 1, 1), 'A skill')
+
+        workload = Workload()
+        workload.assign(task, busy_person)
+
+        self.assertEqual(workload.get_least_busy_person([busy_person, lazy_person]), lazy_person)

@@ -13,3 +13,8 @@ class Workload:
 
     def assigned_to(self, person):
         return self.per_person[person]
+
+    def get_least_busy_person(self, people):
+        if not people:
+            return None
+        return sorted(people, key=lambda person: self.assigned_to(person))[0]
