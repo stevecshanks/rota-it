@@ -1,6 +1,6 @@
 class Task:
 
-    def __init__(self, skill, date, assignee=None):
-        self.skill = skill
+    def __init__(self, date, skill, assignee=None):
         self.date = date
+        self.skill = skill
         self.assignee = assignee

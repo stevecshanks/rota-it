@@ -73,6 +73,10 @@ workload = {
     YURI.name: 0
 }
 
+for task in TASKS:
+    assignee = task.assignee.name if task.assignee is not None else 'UNASSIGNED'
+    print(f'{task.date} - {task.skill}: {assignee}')
+
 
 def assign_tasks(tasks, people):
     pass
@@ -96,6 +100,17 @@ def get_assigned_tasks(tasks, person):
 
 
 if __name__ == '__main__':
+    for task in TASKS:
+        if task.assignee is None:
+            continue
+        eligible_people = get_eligible_people(task, PEOPLE)
+        task.assignee = get_least_busy_person(TASKS, eligible_people)
+
+    for task in TASKS:
+        assignee = task.assignee.name if task.assignee is not None else 'UNASSIGNED'
+        print(f'{task.date} - {task.skill}: {assignee}')
+    exit(0)
+
     max_length = 0
     for task in TASKS:
         eligible_people = [person.name for person
@@ -109,6 +124,7 @@ if __name__ == '__main__':
     for i in range(1, max_length + 1):
         for (date, todos) in tasks.items():
             for (todo, assignments) in todos.items():
+                # Assign tasks with the fewest number of eligible people first
                 if not isinstance(assignments, list) or len(assignments) != i: continue
                 (_, assignee) = sorted([(numTasks, person) for person, numTasks in workload.items() if person in assignments])[0]
                 workload[assignee] += 1
