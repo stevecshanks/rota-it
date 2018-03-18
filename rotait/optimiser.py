@@ -6,7 +6,7 @@ class Optimiser:
     def __init__(self, tasks, people):
         self.tasks = tasks
         self.people = people
-        self.workload = Workload()
+        self.workload = Workload(tasks)
 
     def optimise(self):
         for task in self._sort_by_difficulty(self._get_unassigned()):

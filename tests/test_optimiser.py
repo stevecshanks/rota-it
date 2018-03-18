@@ -63,6 +63,19 @@ class TestOptimiser(unittest.TestCase):
         self.assertEqual(volunteered.assignee, volunteer)
         self.assertEqual(other_task.assignee, other_person)
 
+    def test_volunteers_are_not_given_too_many_tasks(self):
+        volunteer = Person('Volunteer', ['A skill'], [])
+        other_person = Person('Other', ['A skill'], [])
+
+        volunteered = Task(date(2018, 1, 1), 'A skill', volunteer)
+        other_task = Task(date(2018, 1, 1), 'A skill')
+
+        optimiser = Optimiser([volunteered, other_task], [volunteer, other_person])
+        optimiser.optimise()
+
+        self.assertEqual(volunteered.assignee, volunteer)
+        self.assertEqual(other_task.assignee, other_person)
+
     def test_hard_to_allocate_tasks_are_distributed_first(self):
         cleaning1 = Task(date(2018, 1, 1), 'Cleaning')
         cleaning2 = Task(date(2018, 1, 1), 'Cleaning')

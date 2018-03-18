@@ -3,8 +3,8 @@ from collections import Counter
 
 class Workload:
 
-    def __init__(self):
-        self.per_person = Counter()
+    def __init__(self, tasks):
+        self.per_person = Counter(task.assignee for task in tasks)
 
     def assign(self, task, person):
         task.assignee = person
